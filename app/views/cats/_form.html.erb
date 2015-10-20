@@ -1,0 +1,29 @@
+
+<form method="POST" action="<%= cat.persisted? ? cat_url(cat) : cats_url %>">
+  <input type="hidden" name="_method" value="<%= cat.persisted? ? 'PATCH' : 'POST' %>" />
+  <label for="cat-name">Cat name</label>
+  <input type="text" id="cat-name" name="cat[name]" value="<%= cat.name %> ">
+
+  <label for="cat-color">cat color</label>
+  <select id="cat-color" name="cat[color]">
+    <option selected disabled><%= cat.color%></option>
+    <option value="Red">Red</option>
+    <option value="Blue">Blue</option>
+    <option value="Brown">Brown</option>
+    <option value="White">White</option>
+  </select>
+
+  <label for="cat-sex-m">male</label>
+  <input type="radio" id="cat-sex-m" name="cat[sex]" value="M" <%= "checked" if cat.sex == "M" %>>
+
+  <label for="cat-sex-f">female</label>
+  <input type="radio" id="cat-sex-f" name="cat[sex]" value="F" <%= "checked" if cat.sex == "F" %>>
+
+  <label for="cat-birthdate">cat birthdate(YYYY-MM-DD)</label>
+  <input type="date" id="cat-birthdate" name="cat[birth_date]" value="<%= cat.birth_date %>">
+
+  <label for="cat-description">cat description</label>
+  <textarea id="cat-description" name="cat[description]"><%= cat.description %></textarea>
+
+  <button type="submit">Generate Cat!</button>
+</form>

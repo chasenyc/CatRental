@@ -1,0 +1,20 @@
+<h2>Show Cat</h2>
+
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Color</td>
+    <td>Sex</td>
+    <td>Age</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><%= @cat.name %></td>
+    <td><%= @cat.color %></td>
+    <td><%= @cat.sex %></td>
+    <td><%= @cat.age %></td>
+    <td><%= @cat.description %></td>
+  </tr>
+</table>
+
+<%= link_to "All Cats", cats_url %>
