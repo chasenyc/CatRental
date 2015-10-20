@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :cats
+  resources :cat_rental_requests, only: [:index, :new, :create] do
+    patch 'approve'
+  end
+  patch 'cat_rental_requests/:id/approve' => 'cat_rental_requests#approve!'
 
+  patch 'cat_rental_requests/:id/deny' => 'cat_rental_requests#deny!'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

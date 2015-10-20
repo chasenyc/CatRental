@@ -17,4 +17,24 @@
   </tr>
 </table>
 
+Rental Requests
+<table>
+  <tr>
+    <td>Start Date</td>
+    <td>End Date</td>
+  </tr>
+  <% @cat.cat_rental_requests.order(:start_date).each do |request| %>
+  <tr>
+    <td><%= request.start_date %></td>
+    <td><%= request.end_date %></td>
+    <% if request.pending? %>
+      <form method="PATCH" action="<%= new_cat_rental_request_url %>">
+        <input type="hidden" name="_method" value="PATCH">
+        <input type="submit">
+      </form>
+    <% end %>
+  </tr>
+  <% end %>
+</table>
+
 <%= link_to "All Cats", cats_url %>
