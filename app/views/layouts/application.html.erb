@@ -4,7 +4,19 @@
   <title>CatRentals</title>
 </head>
 <body>
+<% if current_user.nil? %>
+<form action="<%= new_session_url %>" method="GET">
+  <input type="submit" value="log in">
+</form>
 
+
+<% else %>
+<%= current_user.user_name %>
+<form action="<%= session_url %>" method="POST">
+  <input type="hidden" name="_method" value="DELETE">
+  <input type="submit" value="log out">
+</form>
+<% end %>
 <%= yield %>
 
 </body>

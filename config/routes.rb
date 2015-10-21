@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  resource :session, only: [:new, :create, :destroy]
+  resources :users, only: [:new, :create] 
+
   resources :cats
   resources :cat_rental_requests, only: [:index, :new, :create] do
     patch 'approve'
