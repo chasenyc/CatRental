@@ -28,10 +28,18 @@ Rental Requests
     <td><%= request.start_date %></td>
     <td><%= request.end_date %></td>
     <% if request.pending? %>
-      <form method="PATCH" action="<%= new_cat_rental_request_url %>">
+    <td>
+      <form method="POST" action="<%= approve_cat_rental_request_url(request) %>">
         <input type="hidden" name="_method" value="PATCH">
-        <input type="submit">
+        <input type="submit" value="Approve">
       </form>
+    </td>
+    <td>
+      <form method="POST" action="<%= deny_cat_rental_request_url(request) %>">
+        <input type="hidden" name="_method" value="PATCH">
+        <input type="submit" value="Deny">
+      </form>
+    </td>
     <% end %>
   </tr>
   <% end %>

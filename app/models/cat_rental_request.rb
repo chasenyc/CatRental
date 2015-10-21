@@ -13,7 +13,8 @@ class CatRentalRequest < ActiveRecord::Base
   def overlapping_requests
     # !(self.end_date < rental.start_date || rental.end_date < self.start_date)
     result = CatRentalRequest
-      .where("start_date > ? OR end_date < ?", self.end_date, self.start_date)
+      .where("cat_id = ?", self.cat_id)
+      .where.not("start_date > ? OR end_date < ?", self.end_date, self.start_date)
 
     if self.persisted?
       result = result.where("id != ?", self.id)
@@ -40,13 +41,15 @@ class CatRentalRequest < ActiveRecord::Base
     self.transaction do
       if self.pending?
         self.update!(status: 'APPROVED')
-        overlapping_pending_requests.each(&:deny!)
+        overlapping_pending_requests.each do |request|
+          request.deny!
+        end
       end
     end
   end
 
   def deny!
-    self.status = "DENIED"
+    self.update!(status: "DENIED")
   end
 
   def pending?
