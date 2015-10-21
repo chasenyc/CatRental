@@ -14,4 +14,8 @@
   <input type="date" id="cat-end-date" name="cat_rental_request[end_date]">
 
   <button type="submit">Submit Rental Request</button>
+
+  <input type="hidden"
+         name="authenticity_token"
+         value="<%= form_authenticity_token %>">
 </form>

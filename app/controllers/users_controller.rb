@@ -1,16 +1,15 @@
 class UsersController < ApplicationController
 
+  before_action :user_signed_in, only: [:new, :create]
+
   def new
     # @user = User.find(params[:id])
     render :new
   end
 
   def create
-    @user = User.new
-    @user.user_name = user_params[:user_name]
-    @user.password = params[:password]
-    @user.reset_session_token!
-    session[:session_token] = @user.session_token
+    @user = User.new(user_params)
+    login_user!(@user)
     if @user.save
       redirect_to cats_url
     else
@@ -21,7 +20,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:user_name, :password_digest)
+    params.require(:user).permit(:user_name, :password)
   end
 
 end

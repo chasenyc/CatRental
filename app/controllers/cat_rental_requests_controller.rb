@@ -12,6 +12,14 @@ class CatRentalRequestsController < ApplicationController
 
   def create
     @request = CatRentalRequest.new(rental_params)
+
+    if current_user.nil?
+      # error[:cat] << "You need to be logged in"
+      redirect_to new_session_url
+      return
+    end
+    @request.user_id = current_user.id
+
     if @request.save
       redirect_to cat_url(@request.cat_id)
     else

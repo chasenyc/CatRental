@@ -1,13 +1,16 @@
 Rails.application.routes.draw do
 
-  resource :session, only: [:new, :create, :destroy]
-  resources :users, only: [:new, :create] 
+  resource :session, only: [:new, :create, :destroy] do
+    get 'log_out' => 'sessions#destroy', as: "log_out"
+  end
+  resources :users, only: [:new, :create]
 
   resources :cats
   resources :cat_rental_requests, only: [:index, :new, :create] do
     patch 'approve'
     patch 'deny'
   end
+
   patch 'cat_rental_requests/:id/approve' => 'cat_rental_requests#approve!', as: "approve_cat_rental_request"
 
   patch 'cat_rental_requests/:id/deny' => 'cat_rental_requests#deny!', as: "deny_cat_rental_request"

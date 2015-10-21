@@ -1,18 +1,20 @@
 class SessionsController < ApplicationController
 
+  before_action :user_signed_in, only: [:new, :create]
+
   def new
     render :sign_in
   end
 
   def create
-    @user ||= User.find_by_credentials(user_params[:user_name], user_params[:password])
+    # fail
+    @user = User.find_by_credentials(user_params[:user_name], user_params[:password])
     if @user.nil?
       redirect_to new_session_url
       return
     end
+    login_user!(@user)
 
-    @user.reset_session_token!
-    session[:session_token] = @user.session_token
     if @user.save
       redirect_to cats_url
     else

@@ -1,12 +1,18 @@
 class CatRentalRequest < ActiveRecord::Base
-  validates :cat_id, :start_date, :end_date, :status, presence: true
+  validates :cat_id, :start_date, :end_date, :status, :user_id, presence: true
   validates :status, inclusion: { in: %w(PENDING APPROVED DENIED), message: "%{value} is not a status"}
   validate :any_overlapping_requests?
+  validate :user_exists?
 
 
   belongs_to :cat,
     class_name: 'Cat',
     foreign_key: :cat_id,
+    primary_key: :id
+
+  belongs_to :requester,
+    class_name: 'User',
+    foreign_key: :user_id,
     primary_key: :id
 
 
@@ -54,6 +60,13 @@ class CatRentalRequest < ActiveRecord::Base
 
   def pending?
     self.status == 'PENDING'
+  end
+
+  def user_exists?
+    user = User.find(user_id)
+    if user.nil?
+      errors[:cat_rental_request] << "Requester needs to exist"
+    end
   end
 
 end

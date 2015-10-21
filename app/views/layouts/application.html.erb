@@ -5,18 +5,14 @@
 </head>
 <body>
 <% if current_user.nil? %>
-<form action="<%= new_session_url %>" method="GET">
-  <input type="submit" value="log in">
-</form>
-
-
+ <a href="<%= new_session_url %>">Log in</a>
+ <a href="<%= new_user_url %>">Sign up</a>
 <% else %>
 <%= current_user.user_name %>
-<form action="<%= session_url %>" method="POST">
-  <input type="hidden" name="_method" value="DELETE">
-  <input type="submit" value="log out">
-</form>
+  <a href="<%= log_out_session_url %>">Log out</a>
 <% end %>
+
+
 <%= yield %>
 
 </body>

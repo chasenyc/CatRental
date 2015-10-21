@@ -16,6 +16,12 @@ class CatsController < ApplicationController
 
   def create
     @cat = Cat.new(cat_params)
+    if current_user.nil?
+      # error[:cat] << "You need to be logged in"
+      redirect_to new_session_url
+      return
+    end
+    @cat.user_id = current_user.id
     if @cat.save
       redirect_to cat_url(@cat)
     else
