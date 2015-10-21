@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
-  resource :session, only: [:new, :create, :destroy] do
-    get 'log_out' => 'sessions#destroy', as: "log_out"
-  end
+  resource :session, only: [:new, :create, :destroy]
   resources :users, only: [:new, :create]
 
   resources :cats
@@ -11,10 +9,10 @@ Rails.application.routes.draw do
     patch 'deny'
   end
 
-  patch 'cat_rental_requests/:id/approve' => 'cat_rental_requests#approve!', as: "approve_cat_rental_request"
-
-  patch 'cat_rental_requests/:id/deny' => 'cat_rental_requests#deny!', as: "deny_cat_rental_request"
-  # The priority is based upon order of creation: first created -> highest priority.
+  # patch 'cat_rental_requests/:id/approve' => 'cat_rental_requests#approve!', as: "approve_cat_rental_request"
+  #
+  # patch 'cat_rental_requests/:id/deny' => 'cat_rental_requests#deny!', as: "deny_cat_rental_request"
+  # # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"

@@ -7,11 +7,11 @@ class ApplicationController < ActionController::Base
 
   def current_user
     token = session[:session_token]
-    @user = User.find_by_token(token)
+    return nil if self.session[:session_token].nil?
+    @user ||= User.find_by_token(token)
   end
 
   def login_user!(user)
-
     user.reset_session_token!
     self.session[:session_token] = user.session_token
   end

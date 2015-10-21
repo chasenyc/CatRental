@@ -9,7 +9,13 @@
  <a href="<%= new_user_url %>">Sign up</a>
 <% else %>
 <%= current_user.user_name %>
-  <a href="<%= log_out_session_url %>">Log out</a>
+  <form action="<%= session_url %>" method="post">
+    <input type="hidden"
+     name="authenticity_token"
+     value="<%= form_authenticity_token %>">
+    <input name="_method" type="hidden" value="delete" />
+    <button name="button">log out</button>
+  </form>
 <% end %>
 
 

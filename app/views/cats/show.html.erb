@@ -24,14 +24,14 @@ Rental Requests
     <td>End Date</td>
     <td>Requester</td>
   </tr>
-  <% @cat.cat_rental_requests.order(:start_date).each do |request| %>
+  <% @cat.cat_rental_requests.includes(:requester).order(:start_date).each do |request| %>
   <tr>
     <td><%= request.start_date %></td>
     <td><%= request.end_date %></td>
     <td><%= request.requester.user_name %></td>
     <% if !current_user.nil? && request.pending? && current_user.id == @cat.user_id %>
     <td>
-      <form method="POST" action="<%= approve_cat_rental_request_url(request) %>">
+      <form method="POST" action="<%= cat_rental_request_approve_url(request) %>">
         <input type="hidden"
          name="authenticity_token"
          value="<%= form_authenticity_token %>">
@@ -40,7 +40,7 @@ Rental Requests
       </form>
     </td>
     <td>
-      <form method="POST" action="<%= deny_cat_rental_request_url(request) %>">
+      <form method="POST" action="<%= cat_rental_request_deny_url(request) %>">
         <input type="hidden"
          name="authenticity_token"
          value="<%= form_authenticity_token %>">
